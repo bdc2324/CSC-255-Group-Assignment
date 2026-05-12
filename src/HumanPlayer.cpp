@@ -22,7 +22,7 @@ const Board& Player::getBoard() const { return board_; }
 HumanPlayer::HumanPlayer(const std::string& name) : Player(name) {}
 
 void HumanPlayer::placeFleet() {
-    std::cout << "\n" << name_ << ", place your fleet.\n";
+    std::cout << "\n" << name_ << ", place ships.\n";
     std::cout << "Format: <column A-J><row 1-10> <H or V>   (e.g. \"B3 H\")\n\n";
 
     Ship* ships[] = { &carrier_, &battleship_, &cruiser_, &submarine_, &destroyer_ };
