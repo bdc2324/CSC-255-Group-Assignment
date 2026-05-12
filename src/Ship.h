@@ -13,24 +13,47 @@ struct Coordinate {
 class Ship {
 public:
     // Constructor: provide display name and size (number of cells)
-    Ship(const std::string& name, int size);
+    Ship(const std::string& name, int size) : name_(name), size_(size) { };
 
     // Getters
-    std::string getName() const;
-    int getSize() const;
-    int getHits() const;
-    bool isSunk() const;
+    std::string getName() const {
+    	return name_;
+    }
+    int getSize() const {
+    	return size_;
+    }
+    int getHits() const {
+    	return hits_;
+    }
+    bool isSunk() const {
+    	return hits_ >= size_;
+    }
 
     // Place the ship on the board by providing all occupied coordinates.
     // Call this once during setup (manual or random placement).
-    void place(const std::vector<Coordinate>& coords);
+    void place(const std::vector<Coordinate>& coords) {
+    	coordinates_ = coords;
+    	hits_ = 0;
+    }
 
     // Returns true if this coordinate is a hit on this ship (and records it).
-    // Returns false if the coordinate misses or was already hit.
-    bool checkHit(int row, int col);
+    // Returns false if the coordinate misses
+    bool checkHit(int row, int col) {
+    	for (const Coordinate& c : coordinates_)
+    	{
+    		if ((row == c.row) && (col == c.col))
+    		{
+    			hits_++;
+    			return true;
+    		}
+    	}
+    	return false;
+    }
 
     // Returns all coordinates this ship occupies (used by Board for collision checks).
-    const std::vector<Coordinate>& getCoordinates() const;
+    const std::vector<Coordinate>& getCoordinates() const {
+    	return coordinates_;
+    }
 
 private:
     std::string name_;
