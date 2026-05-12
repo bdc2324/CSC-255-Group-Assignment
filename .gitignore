@@ -163,6 +163,10 @@ venv.bak/
 .spyderproject
 .spyproject
 
+# Claude
+/claude.md 
+/.claude
+
 # Rope project settings
 .ropeproject
 
