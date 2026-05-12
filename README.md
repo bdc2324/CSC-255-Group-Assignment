@@ -1,1 +1,1 @@
-# CSC-255-Group-Assignment
+# Battleship — CSC 255 Group Assignment
