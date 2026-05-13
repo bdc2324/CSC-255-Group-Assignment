@@ -13,7 +13,7 @@ struct Coordinate {
 class Ship {
 public:
     // Constructor: provide display name and size (number of cells)
-    Ship(const std::string& name, int size) : name_(name), size_(size) { };
+    Ship(const std::string& name, int size) : name_(name), size_(size), hits_(0) { };
 
     // Getters
     std::string getName() const {

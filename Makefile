@@ -14,7 +14,11 @@ all: $(TARGET)
 $(TARGET): $(SRCS)
 	$(CXX) $(CXXFLAGS) -I$(INCDIR) -o $(TARGET) $(SRCS)
 
-clean:
-	rm -f $(TARGET)
+test:
+	$(CXX) $(CXXFLAGS) -I$(INCDIR) -o tests/run_tests tests/tests.cpp $(SRCDIR)/Board.cpp
+	./tests/run_tests
 
-.PHONY: all clean
+clean:
+	rm -f $(TARGET) tests/run_tests
+
+.PHONY: all test clean
