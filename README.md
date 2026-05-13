@@ -18,6 +18,12 @@ To recompile from scratch:
 make clean && make
 ```
 
+To build and run the unit tests:
+
+```
+make test
+```
+
 ---
 
 ## How to Play
@@ -85,6 +91,8 @@ CSC-255-Group-Assignment/
 │   ├── AIPlayer.cpp
 │   ├── Game.cpp
 │   └── main.cpp
+├── tests/
+│   └── tests.cpp             # Unit tests for Ship and Board
 ├── resources/                # Assignment documents
 └── Makefile
 ```
@@ -137,6 +145,25 @@ The project uses the C++ `<random>` library rather than the older `rand()` funct
 - *Target mode* — after a hit, the four orthogonal neighbours of the hit cell are pushed onto a `std::queue`. The AI drains this queue on subsequent turns before returning to random selection. When a ship is sunk the queue is cleared, ending target mode.
 
 This mimics the strategy an real human player would likely use and produces noticeably more engaging play than fully random AI.
+
+### Testing
+
+A self-contained test suite lives in `tests/tests.cpp` and requires no external framework. Run it with:
+
+```
+make test
+```
+
+62 tests across 6 sections cover the two core classes:
+
+| Section | What is tested |
+|---------|---------------|
+| `Ship` | Constructor, getters, `place()`, `checkHit()` hits and misses, `isSunk()`, hit count reset on re-placement |
+| `Board` — static helpers | `inBounds()` at all edges, `colToLetter()`, `letterToCol()` including lowercase and invalid input |
+| `Board` — `placeShip()` | Valid horizontal/vertical, overflow on both axes, exact fit, out-of-bounds origin, overlap rejection, two non-overlapping ships |
+| `Board` — `receiveAttack()` | Miss, hit, sunk, already-attacked, hit-not-sunk on a multi-cell ship |
+| `Board` — `allShipsSunk()` | No ships placed, one ship partially/fully hit, two ships requiring both to be sunk |
+| `Board` — `placeShipRandomly()` | Coordinates populated, all in bounds, full five-ship fleet completes without error |
 
 ### Development Process
 
