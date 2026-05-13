@@ -2,6 +2,8 @@
 #include "Board.h"
 #include <string>
 #include <random>
+#include <queue>
+#include <utility>
 
 // Abstract base class for both Human and AI players.
 // Person B is responsible for implementing HumanPlayer.cpp and AIPlayer.cpp.
@@ -68,8 +70,9 @@ public:
     // Place all ships in random valid positions using rng_.
     void placeFleet() override;
 
-    // Attack a random un-attacked cell.
-    // Stretch goal: implement hunt/target mode (attack adjacent cells after a hit).
+    // Attacks in two modes:
+    //   Hunt  — random un-attacked cell when no known hits are pending.
+    //   Target — works through adjacent cells after a hit until the ship sinks.
     AttackResult takeTurn(Board& opponentBoard) override;
 
 private:
@@ -77,4 +80,8 @@ private:
 
     // Track cells the AI has already attacked to avoid repeats.
     bool alreadyAttacked_[Board::SIZE][Board::SIZE];
+
+    // Cells queued for follow-up after a hit (target mode).
+    // Populated when a hit lands; cleared when a ship is sunk.
+    std::queue<std::pair<int,int>> targetQueue_;
 };
