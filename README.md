@@ -81,10 +81,10 @@ The result is printed after each shot. You and the computer alternate until one 
 ```
 CSC-255-Group-Assignment/
 ├── include/                  # Class declarations
-│   ├── Ship.h                # Ship — position, hit tracking, sunk state
-│   ├── Board.h               # Board — 10x10 grid, placement, attack logic
+│   ├── Ship.h                # Ship - position, hit tracking, sunk state
+│   ├── Board.h               # Board - 10x10 grid, placement, attack logic
 │   ├── Player.h              # Player base class, HumanPlayer, AIPlayer
-│   └── Game.h                # Game — setup phase and turn loop
+│   └── Game.h                # Game - setup phase and turn loop
 ├── src/                      # Implementations
 │   ├── Board.cpp
 │   ├── HumanPlayer.cpp       # Also contains Player base class definitions
@@ -120,29 +120,29 @@ This project was built around two of the course topics: **Games** and **Random N
 
 The project is structured around an inheritance hierarchy that reflects the core principle of the course:
 
-- **Encapsulation** — each class owns its data and exposes only what other classes need. `Board` manages its own grid and ship list internally; callers only interact through `placeShip()`, `receiveAttack()`, and `display()`.
-- **Inheritance** — `HumanPlayer` and `AIPlayer` both extend the abstract `Player` base class, sharing a common interface (`placeFleet()`, `takeTurn()`) while implementing different behavior.
-- **Polymorphism** — `Game` holds two `std::unique_ptr<Player>` pointers and drives the entire game loop through the base class interface, with no knowledge of whether a player is human or AI.
+- **Encapsulation** - each class owns its data and exposes only what other classes need. `Board` manages its own grid and ship list internally; callers only interact through `placeShip()`, `receiveAttack()`, and `display()`.
+- **Inheritance** - `HumanPlayer` and `AIPlayer` both extend the abstract `Player` base class, sharing a common interface (`placeFleet()`, `takeTurn()`) while implementing different behavior.
+- **Polymorphism** - `Game` holds two `std::unique_ptr<Player>` pointers and drives the entire game loop through the base class interface, with no knowledge of whether a player is human or AI.
 
 ### Random Number Generation
 
 The project uses the C++ `<random>` library rather than the older `rand()` function. Two components are involved:
 
-- **`std::random_device`** — a non-deterministic entropy source used to generate the initial seed in `main.cpp`. This ensures each game produces a different result.
-- **`std::mt19937`** — the Mersenne Twister engine, seeded once and stored in `AIPlayer`. It is passed by reference into `Board::placeShipRandomly()` so the same engine drives both placement and attacks, keeping the RNG state consistent. `std::uniform_int_distribution<int>` is used to map raw engine output to valid grid coordinates.
+- **`std::random_device`** - a non-deterministic entropy source used to generate the initial seed in `main.cpp`. This ensures each game produces a different result.
+- **`std::mt19937`** - the Mersenne Twister engine, seeded once and stored in `AIPlayer`. It is passed by reference into `Board::placeShipRandomly()` so the same engine drives both placement and attacks, keeping the RNG state consistent. `std::uniform_int_distribution<int>` is used to map raw engine output to valid grid coordinates.
 
 ### Algorithms and Data Structures
 
-**Ship placement** (`Board::placeShipRandomly`) uses a retry loop: generate a random origin and orientation, attempt to place, and repeat until a valid position is found. Placement validation does a two-pass check — first confirming all cells are free, then committing — so the grid is never left in a partial state.
+**Ship placement** (`Board::placeShipRandomly`) uses a retry loop: generate a random origin and orientation, attempt to place, and repeat until a valid position is found. Placement validation does a two-pass check - first confirming all cells are free, then committing - so the grid is never left in a partial state.
 
-**Coordinate system** — internally all positions are stored as zero-indexed `(row, col)` integer pairs. The `Board` class provides static helpers `colToLetter()` and `letterToCol()` to translate between the internal representation and the `A1`–`J10` format shown to the player.
+**Coordinate system** - internally all positions are stored as zero-indexed `(row, col)` integer pairs. The `Board` class provides static helpers `colToLetter()` and `letterToCol()` to translate between the internal representation and the `A1`–`J10` format shown to the player.
 
-**Attack results** — `Board::receiveAttack()` returns an `AttackResult` enum (`MISS`, `HIT`, `SUNK`, `ALREADY_ATTACKED`). This lets `Game` react to outcomes through a single return value without needing to inspect board state directly.
+**Attack results** - `Board::receiveAttack()` returns an `AttackResult` enum (`MISS`, `HIT`, `SUNK`, `ALREADY_ATTACKED`). This lets `Game` react to outcomes through a single return value without needing to inspect board state directly.
 
-**AI search/target strategy** — `AIPlayer::takeTurn()` operates in two modes:
+**AI search/target strategy** - `AIPlayer::takeTurn()` operates in two modes:
 
-- *Search mode* — selects a random un-attacked cell using the Mersenne Twister.
-- *Target mode* — after a hit, the four orthogonal neighbours of the hit cell are pushed onto a `std::queue`. The AI drains this queue on subsequent turns before returning to random selection. When a ship is sunk the queue is cleared, ending target mode.
+- *Search mode* - selects a random un-attacked cell using the Mersenne Twister.
+- *Target mode* - after a hit, the four orthogonal neighbours of the hit cell are pushed onto a `std::queue`. The AI drains this queue on subsequent turns before returning to random selection. When a ship is sunk the queue is cleared, ending target mode.
 
 This mimics the strategy an real human player would likely use and produces noticeably more engaging play than fully random AI.
 
@@ -159,8 +159,8 @@ make test
 | Section | What is tested |
 |---------|---------------|
 | `Ship` | Constructor, getters, `place()`, `checkHit()` hits and misses, `isSunk()`, hit count reset on re-placement |
-| `Board` — static helpers | `inBounds()` at all edges, `colToLetter()`, `letterToCol()` including lowercase and invalid input |
-| `Board` — `placeShip()` | Valid horizontal/vertical, overflow on both axes, exact fit, out-of-bounds origin, overlap rejection, two non-overlapping ships |
-| `Board` — `receiveAttack()` | Miss, hit, sunk, already-attacked, hit-not-sunk on a multi-cell ship |
-| `Board` — `allShipsSunk()` | No ships placed, one ship partially/fully hit, two ships requiring both to be sunk |
-| `Board` — `placeShipRandomly()` | Coordinates populated, all in bounds, full five-ship fleet completes without error |
+| `Board` - static helpers | `inBounds()` at all edges, `colToLetter()`, `letterToCol()` including lowercase and invalid input |
+| `Board` - `placeShip()` | Valid horizontal/vertical, overflow on both axes, exact fit, out-of-bounds origin, overlap rejection, two non-overlapping ships |
+| `Board` - `receiveAttack()` | Miss, hit, sunk, already-attacked, hit-not-sunk on a multi-cell ship |
+| `Board` - `allShipsSunk()` | No ships placed, one ship partially/fully hit, two ships requiring both to be sunk |
+| `Board` - `placeShipRandomly()` | Coordinates populated, all in bounds, full five-ship fleet completes without error |

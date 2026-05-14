@@ -1,11 +1,11 @@
 # Project Summary
-## CSC 255: Objects and Algorithms — Group Programming Assignment
+## CSC 255: Objects and Algorithms - Group Programming Assignment
 
 ---
 
 ## Core Project Concept
 
-Our group built a command-line Battleship game in C++. This topic satisfied two of the prominent course themes — **Games** and **Random Number Generation** — and gave us a natural, well-scoped problem to decompose into objects and algorithms, which aligned directly with the focus of the course.
+Our group built a command-line Battleship game in C++. This topic satisfied two of the prominent course themes - **Games** and **Random Number Generation** - and gave us a natural, well-scoped problem to decompose into objects and algorithms, which aligned directly with the focus of the course.
 
 Battleship was appealing because its structure maps cleanly onto object-oriented design: a ship is an object, a board is an object that owns ships, players are objects that own boards, and the game orchestrates them. The randomness requirement fits naturally into how the computer opponent places its fleet and selects attack coordinates.
 
@@ -55,19 +55,19 @@ The project implements a fully playable one-versus-one Battleship game: one huma
 
 ## Technical Highlights
 
-**Object-oriented design** — The project centers on a `Player` abstract base class with two concrete subclasses (`HumanPlayer`, `AIPlayer`). The `Game` class interacts with both through the shared base interface, meaning the game loop has no knowledge of whether a player is human or computer. This is a direct application of polymorphism and encapsulation as covered in the course.
+**Object-oriented design** - The project centers on a `Player` abstract base class with two concrete subclasses (`HumanPlayer`, `AIPlayer`). The `Game` class interacts with both through the shared base interface, meaning the game loop has no knowledge of whether a player is human or computer. This is a direct application of polymorphism and encapsulation as covered in the course.
 
-**Random Number Generation** — Rather than the older C-style `rand()`, the project uses C++'s `<random>` library. A `std::random_device` generates a non-deterministic seed at startup, which is used to initialize a `std::mt19937` (Mersenne Twister) engine stored inside `AIPlayer`. `std::uniform_int_distribution` maps engine output to valid grid coordinates. The same engine instance is passed by reference into `Board::placeShipRandomly()`, keeping the RNG state consistent across both ship placement and attack selection.
+**Random Number Generation** - Rather than the older C-style `rand()`, the project uses C++'s `<random>` library. A `std::random_device` generates a non-deterministic seed at startup, which is used to initialize a `std::mt19937` (Mersenne Twister) engine stored inside `AIPlayer`. `std::uniform_int_distribution` maps engine output to valid grid coordinates. The same engine instance is passed by reference into `Board::placeShipRandomly()`, keeping the RNG state consistent across both ship placement and attack selection.
 
-**AI hunt/target algorithm** — After a hit, the AI pushes the four orthogonal neighbors of the hit cell onto a `std::queue`. It drains this queue on subsequent turns before resuming random fire. When a ship is sunk the queue is cleared. This produces noticeably more challenging play than a purely random opponent.
+**AI hunt/target algorithm** - After a hit, the AI pushes the four orthogonal neighbors of the hit cell onto a `std::queue`. It drains this queue on subsequent turns before resuming random fire. When a ship is sunk the queue is cleared. This produces noticeably more challenging play than a purely random opponent.
 
-**Testing** — The unit test suite runs without any external framework. It covers 62 cases across `Ship` and `Board`. During testing, it caught an uninitialized `hits_` member in `Ship`'s constructor — a bug that was masked during normal gameplay because `place()` always resets `hits_` before a ship is used, but would have caused undefined behavior if `getHits()` or `isSunk()` were called on a ship before placement.
+**Testing** - The unit test suite runs without any external framework. It covers 62 cases across `Ship` and `Board`. During testing, it caught an uninitialized `hits_` member in `Ship`'s constructor - a bug that was masked during normal gameplay because `place()` always resets `hits_` before a ship is used, but would have caused undefined behavior if `getHits()` or `isSunk()` were called on a ship before placement.
 
 ---
 
 ## Reflection
 
-The header-first approach — agreeing on class interfaces before writing implementations — was the most valuable organizational decision we made. It allowed Person 1 and Person 2 to work independently without stepping on each other, and gave Person 3 a stable interface to write `Game` against before the player implementations were finished.
+The header-first approach - agreeing on class interfaces before writing implementations - was the most valuable organizational decision we made. It allowed Person 1 and Person 2 to work independently without stepping on each other, and gave Person 3 a stable interface to write `Game` against before the player implementations were finished.
 
 The AI usage was most helpful during the research and design phase: understanding the trade-offs of different RNG approaches, thinking through the hunt/target queue design, and getting feedback on potential pitfalls like the uninitialized variable issue. See the Development Process section of the README for a more detailed account.
 
