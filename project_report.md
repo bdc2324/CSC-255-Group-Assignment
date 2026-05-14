@@ -83,10 +83,10 @@ Work was divided across three members. Person 1 designed the class architecture 
 
 The group used AI as a learning asset throughout the project, in accordance with the assignment guidelines. Key areas where it contributed:
 
-- *Research and topic selection* — We asked the chatbot to explain how `std::mt19937` compares to `rand()` and how `std::uniform_int_distribution` maps engine output to a range. This informed our decision to use the `<random>` library and shaped the design of `AIPlayer`.
-- *Incorporating course requirements* — We discussed how to make random number generation a meaningful part of the project rather than an afterthought, which led to using RNG for both ship placement and the AI's attack logic.
-- *Unit tests* — AI helped design the test structure and identify edge cases worth covering (overflow at grid edges, overlap detection, repeated attacks, the uninitialized constructor state).
-- *README and documentation* — Used to draft and iterate on the README and project summary.
+- *Research and topic selection* - We asked the chatbot to explain how `std::mt19937` compares to `rand()` and how `std::uniform_int_distribution` maps engine output to a range. This informed our decision to use the `<random>` library and shaped the design of `AIPlayer`.
+- *Incorporating course requirements* - We discussed how to make random number generation a meaningful part of the project rather than an afterthought, which led to using RNG for both ship placement and the AI's attack logic.
+- *Unit tests* - AI helped design the test structure and identify edge cases worth covering (overflow at grid edges, overlap detection, repeated attacks, the uninitialized constructor state).
+- *README and documentation* - Used to draft and iterate on the README and project summary.
 - *Formatting and Proofreading* - Used to help format items such as folder tree and UML diagram, as well as ensure proper spelling throughout. 
 
 ---
@@ -120,9 +120,9 @@ classDiagram
         +receiveAttack(row, col) AttackResult
         +allShipsSunk() bool
         +display(hideShips)
-        +inBounds(row, col)$ bool
-        +colToLetter(col)$ char
-        +letterToCol(letter)$ int
+        +inBounds(row, col)- bool
+        +colToLetter(col)- char
+        +letterToCol(letter)- int
     }
 
     class Player {
