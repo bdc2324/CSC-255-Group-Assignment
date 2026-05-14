@@ -1,4 +1,4 @@
-# Battleship [README DRAFT IN PROGRESS]
+# Battleship - CSC 255: Objects and Algorithms Group Project
 
 A command-line implementation of the Battleship board game written in C++. Completed as a group assignment for CSC 255: Objects and Algorithms at Oakton College.
 
@@ -146,7 +146,7 @@ The project uses the C++ `<random>` library rather than the older `rand()` funct
 
 This mimics the strategy an real human player would likely use and produces noticeably more engaging play than fully random AI.
 
-### Testing
+## Testing
 
 A self-contained test suite lives in `tests/tests.cpp` and requires no external framework. Run it with:
 
@@ -164,7 +164,3 @@ make test
 | `Board` — `receiveAttack()` | Miss, hit, sunk, already-attacked, hit-not-sunk on a multi-cell ship |
 | `Board` — `allShipsSunk()` | No ships placed, one ship partially/fully hit, two ships requiring both to be sunk |
 | `Board` — `placeShipRandomly()` | Coordinates populated, all in bounds, full five-ship fleet completes without error |
-
-### Development Process
-
-TBA
