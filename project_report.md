@@ -33,23 +33,24 @@ The project implements a fully playable one-versus-one Battleship game: one huma
 
 ## Division of Work
 
-**Person 1** was responsible for the project architecture and data layer:
+**Quinn**
 - Designed the overall class structure and established integration contracts between components
 - Wrote the header files (`Ship.h`, `Board.h`, `Player.h`, `Game.h`) that defined the interfaces all members coded against
 - Produced the initial work plan so development on separate components could proceed in parallel
+- Contributed to documentation
 
-**Person 2** handled group coordination, the core game logic, and documentation:
+**Brendan**
 - Coordinated communication between group members and managed integration of components
 - Implemented `HumanPlayer` and `AIPlayer`, including input validation and the hunt/target AI strategy
 - Implemented `Board`, including placement validation, the random placement retry loop, and attack processing
 - Produced the UML class diagram
 - Contributed to documentation
 
-**Person 3** handled the game loop, testing, and documentation:
+**Christopher**
 - Implemented `Game`, including the setup phase, turn loop, board display, and win detection
 - Wrote `main.cpp`
 - Designed and wrote the unit test suite (`tests/tests.cpp`), which identified an unexpected behavior in `Ship`'s constructor during development
-- Contributed to the README and project summary
+- Contributed to documentation
 
 ---
 
@@ -67,15 +68,15 @@ The project implements a fully playable one-versus-one Battleship game: one huma
 
 ## Reflection
 
-The header-first approach - agreeing on class interfaces before writing implementations - was the most valuable organizational decision we made. It allowed Person 1 and Person 2 to work independently without stepping on each other, and gave Person 3 a stable interface to write `Game` against before the player implementations were finished.
+The header-first approach, agreeing on class interfaces before writing implementations, was the most valuable organizational decision we made. It allowed everyone to work independently without our code conflicting, and provided a stable interface to write `Game` against before the player implementations were finished.
 
-The AI usage was most helpful during the research and design phase: understanding the trade-offs of different RNG approaches, thinking through the hunt/target queue design, and getting feedback on potential pitfalls like the uninitialized variable issue. See the Development Process section of the README for a more detailed account.
+The AI usage was most helpful during the research and design phase: understanding the trade-offs of different RNG approaches, thinking through the hunt/target queue design, and getting feedback on potential pitfalls like the uninitialized variable issue we encountered. See the Development Process section of the README for a more detailed account.
 
 ---
 
 ## Development Process
 
-Work was divided across three members. Person 1 designed the class architecture and wrote all header files, establishing the interfaces that the rest of the team coded against. Person 2 implemented `Board`, `HumanPlayer`, and `AIPlayer`, and produced the UML diagram. Person 3 implemented `Game` and `main`, and wrote the unit test suite.
+Work was divided across three members. Quinn designed the class architecture and wrote all header files, establishing the interfaces that the rest of the team coded against. Brendan implemented `Board`, `HumanPlayer`, and `AIPlayer`, and produced the UML diagram. Christopher implemented `Game` and `main`, and wrote the unit test suite.
 
 ---
 
@@ -84,7 +85,7 @@ Work was divided across three members. Person 1 designed the class architecture 
 The group used AI as a learning asset throughout the project, in accordance with the assignment guidelines. Key areas where it contributed:
 
 - *Research and topic selection* - We asked the chatbot to explain how `std::mt19937` compares to `rand()` and how `std::uniform_int_distribution` maps engine output to a range. This informed our decision to use the `<random>` library and shaped the design of `AIPlayer`.
-- *Incorporating course requirements* - We discussed how to make random number generation a meaningful part of the project rather than an afterthought, which led to using RNG for both ship placement and the AI's attack logic.
+- *Incorporating course requirements* - We discussed how to make random number generation a meaningful part of the project, which led to using RNG for both ship placement and the AI's attack logic.
 - *Unit tests* - AI helped design the test structure and identify edge cases worth covering (overflow at grid edges, overlap detection, repeated attacks, the uninitialized constructor state).
 - *README and documentation* - Used to draft and iterate on the README and project summary.
 - *Formatting and Proofreading* - Used to help format items such as folder tree and UML diagram, as well as ensure proper spelling throughout. 
