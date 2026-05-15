@@ -20,7 +20,16 @@ int main() {
             std::make_unique<AIPlayer>("Computer", seed)
         );
         game.run();
+        
+        char playAgain;
+        std::cout << "Do you want to play again? (y/n): ";
+        std::cin >> playAgain;
 
+        if (playAgain == 'n' || playAgain == 'N') {
+            std::cout << "Thanks for playing, goodbye!\n";
+            break;
+        }
+        
         std::cout << "\n";
     }
 
