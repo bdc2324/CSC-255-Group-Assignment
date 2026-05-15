@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "Player.h"
 #include <iostream>
+#include <limits>
 #include <memory>
 #include <random>
 #include <string>
@@ -24,6 +25,8 @@ int main() {
         char playAgain;
         std::cout << "Do you want to play again? (y/n): ";
         std::cin >> playAgain;
+        // Clear buffer in case of longer input 
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
         if (playAgain == 'n' || playAgain == 'N') {
             std::cout << "Thanks for playing, goodbye!\n";
